@@ -1,0 +1,27 @@
+body {
+    background-color: #b0d3eb;
+    font-family: Arial, sans-serif;
+}
+
+#animal-container {
+    max-width: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#animal-container img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.2s ease-in-out;
+    transform-origin: center bottom;
+}
+
+#step-counter {
+	text-align: center;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

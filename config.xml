@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/PetWalkersWA" version="1.0.0" viewmodes="maximized">
+    <tizen:application id="Y3EkaeebBE.PetWalkersWA" package="Y3EkaeebBE" required_version="7.0"/>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <tizen:privilege name="http://tizen.org/privilege/healthinfo"/>
+    <icon src="icon.png"/>
+    <name>PetWalkersWA</name>
+    <tizen:profile name="wearable"/>
+</widget>
