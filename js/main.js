@@ -1,6 +1,19 @@
+const DEBUG = false;
+const stepCount = document.getElementById('step-count');
+
+//## Animal ##
+const animalImage = document.getElementById('animal-img');
+var isJumping = false;
+var happynessLevel = 100;
+var happynessTapCount = 0;
+var happynessTapGoal = 0;
+var happynessTapMin = 1;
+var happynessTapMax = 2;
+
 
 window.onload = function () {
     // TODO:: Do your initialization job
+	start();
 
     // add eventListener for tizenhwkey
     document.addEventListener('tizenhwkey', function(e) {
@@ -14,9 +27,67 @@ window.onload = function () {
     getStepCountToday();
 };
 
-//Get the animal image element
-const animalImage = document.getElementById('animal-img');
-let isJumping = false;
+function start() {
+	happynessTapGoal = getRandomNumber(happynessTapMin, happynessTapMax);
+}
+
+animalImage.addEventListener('click', onAnimalTap);
+function onAnimalTap() {
+    happynessTapCount++;
+    stepCount.textContent = happynessTapCount;
+
+    if (happynessTapCount === happynessTapGoal) {
+        happynessTapGoal = getRandomNumber(happynessTapMin, happynessTapMax);
+        happynessTapCount = 0;
+        startHearts();
+       
+    } else {
+        jumpAnimal();
+    }
+}
+
+function startHearts() {
+	const intervalId = setInterval(createHeart, 200);
+	setTimeout(() => {
+	    clearInterval(intervalId);
+	}, 5000);
+}
+
+
+function createHeart() {
+//    const heart = document.createElement("div");
+//    heart.classList.add("heart");
+//    heart.style.left = "50%"; // Center the heart horizontally
+//    heart.style.top = "12%"; // Center the heart vertically
+//    heart.style.transform = "translate(-50%, -50%)";
+//    heart.style.left = Math.random() * 25 + "%";
+//    document.getElementById("heart-container").appendChild(heart);
+//
+//    // Remove the heart from the DOM after the animation is complete
+//    heart.addEventListener("animationend", () => {
+//        heart.remove();
+//    });
+	
+    var heart = document.createElement("div");
+    heart.classList.add("heart");
+    
+    var containerWidth = document.getElementById("animal-container").offsetWidth;
+    const maxOffset = containerWidth * 0.30; // 25% of the container's width
+
+    const randomOffset = Math.random() * maxOffset * 2 - maxOffset; // Generate a random value between -25% and +25%
+    const offsetX = 50 + (randomOffset / containerWidth) * 50;
+
+    heart.style.left = offsetX + "%"; // Set the left position with the calculated offsetX value
+    heart.style.top = "12%"; // Center the heart vertically
+    heart.style.transform = "translate(-50%, -50%)"; // Center the heart absolutely
+
+    document.getElementById("heart-container").appendChild(heart);
+
+    // Remove the heart from the DOM after the animation is complete
+    heart.addEventListener("animationend", () => {
+        heart.remove();
+    });
+}
 
 //Function to make the animal jump
 function jumpAnimal() {
@@ -32,8 +103,7 @@ function jumpAnimal() {
     }, 200);
 }
 
-// Attach a click event listener to the animal image
-animalImage.addEventListener('click', jumpAnimal);
+
 
 function getStepCountToday() {
     var stepCount = 0;
