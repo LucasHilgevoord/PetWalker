@@ -1,15 +1,36 @@
 const scenes = document.querySelectorAll('.scene');
-let currentSceneIndex = 0;
+let currentSceneIndex = 1;
 
 function showScene(index) {
 	for (var i = 0; i < scenes.length; i++) {
 		const scene = scenes[i];
-        //scene.style.transform = "translateX(${(i - index) * 100}%)"; // Move scenes horizontally
-        scene.style.transform = `translateX(${(i - index) * 100}%)`;
+        if (scene.classList.contains('ui-scene')) {
+            // Handle UI scene differently
+        } else {
+            scene.style.transform = `translateX(${(i - index) * 100}%)`;
+        }
     }
-
+    const translateValue = -(index * 100);
+    moveAnimalToPosition(translateValue);
     console.log("Show Scene: " + index);
     currentSceneIndex = index;
+}
+
+// Function to move the animal to the specified position
+function moveAnimalToPosition(translateValue) {
+    // Calculate the new left position for the animal
+    const leftPosition = animalInitialLeft + translateValue; // Adjust as needed
+
+    // Apply the new left position to the animal
+    animalImage.style.left = leftPosition + 'px';
+
+    // Play the walk animation
+    //animalImage.classList.add('walk-animation');
+
+    // After the animation duration, remove the walk animation class
+    setTimeout(() => {
+        //animalImage.classList.remove('walk-animation');
+    }, 1000); // Adjust the duration as needed
 }
 
 // Swipe Right (Next Scene)

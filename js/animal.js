@@ -1,5 +1,7 @@
 //## Animal ##
-const animalImage = document.getElementById('animal-img');
+var animalImage = document.getElementById('animal-img');
+var animalInitialLeft = 50;
+
 var isJumping = false;
 var happynessLevel = 100;
 var happynessTapCount = 0;
