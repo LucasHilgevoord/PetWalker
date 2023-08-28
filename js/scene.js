@@ -24,30 +24,37 @@ function showScene(index) {
 
 // Function to move the animal to the specified position
 function moveAnimalToPosition() {
-    // Apply the new left position to the animal
-    let direction = -(currentSceneIndex - prevSceneIndex);
-    console.log(direction);
-    let position = (200 * direction);
-    console.log(position);
-
-    animalImage.style.transition = sceneTransition;
-    animalImage.style.transform = `translateX(${position}%)`;
-
     // After a delay, move the animal back to the center
     if (walkbackInterval != null) {
         clearInterval(walkbackInterval);
     }
-    walkbackInterval = setTimeout(() => {
-        animalImage.style.transition = animalWalkBackTransition;
-        
-        let randomX = getRandomNumber(-25, 25)
-        animalImage.style.transform = `translateX(${randomX}%)`;
-    }, 750);
+    
+    // Apply the new left position to the animal
+    if (!scenes[prevSceneIndex].classList.contains('ui-scene')) {
+        console.log("move");
+        let direction = -(currentSceneIndex - prevSceneIndex);
+        let position = (200 * direction);
 
+        animalImage.style.transition = sceneTransition;
+        animalImage.style.transform = `translateX(${position}%)`;
+
+    } else if (scenes[prevSceneIndex].classList.contains('ui-scene')) {
+        animalImage.style.transition = sceneTransition;
+        animalImage.style.transform = `translateX(0%)`;
+    }
+
+    if (!scenes[currentSceneIndex].classList.contains('ui-scene')) {
+        walkbackInterval = setTimeout(() => {
+            animalImage.style.transition = animalWalkBackTransition;
+
+            let randomX = 0;//getRandomNumber(-25, 25)
+            animalImage.style.transform = `translateX(${randomX}%)`;
+        }, 750);
+    }
     // After the animation duration, remove the walk animation class
-    setTimeout(() => {
-        //animalImage.classList.remove('walk-animation');
-    }, 1000);
+    //setTimeout(() => {
+    //    animalImage.classList.remove('walk-animation');
+    //}, 1000);
 }
 
 // Swipe Right (Next Scene)
