@@ -48,7 +48,7 @@ function moveAnimalToPosition() {
             animalImage.style.transition = animalWalkBackTransition;
 
             let randomX = 0;//getRandomNumber(-25, 25)
-            animalImage.style.transform = `translateX(${randomX}%)`;
+            walkAnimal(randomX);
         }, 750);
     }
     // After the animation duration, remove the walk animation class

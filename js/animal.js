@@ -1,5 +1,5 @@
 //## Animal ##
-var animalImage = document.getElementById('animal-img');
+const animalImage = document.getElementById('animal-img');
 var animalInitialLeft = 50;
 
 var isJumping = false;
@@ -10,7 +10,9 @@ var happynessTapMin = 1;
 var happynessTapMax = 2;
 
 function initializeAnimal() {
-	happynessTapGoal = getRandomNumber(happynessTapMin, happynessTapMax);
+    happynessTapGoal = getRandomNumber(happynessTapMin, happynessTapMax);
+    startIdle();
+    
 }
 
 animalImage.addEventListener('click', onAnimalTap);
@@ -35,7 +37,6 @@ function startHearts() {
 	    clearInterval(intervalId);
 	}, 5000);
 }
-
 
 function createHeart() {
 //    const heart = document.createElement("div");
@@ -84,4 +85,20 @@ function jumpAnimal() {
             setTimeout(() => { isJumping = false; }, 200);
         }, 200);
     }, 200);
+}
+
+function walkAnimal(xPos) {
+    setAnimation('walkAnimation', '1s', 'steps(8)', 'infinite');
+    animalImage.style.transform = `translateX(${xPos}%)`;
+}
+
+function startIdle() {
+    setAnimation('idleAnimation', '1s', 'steps(10)', 'infinite');
+}
+
+function setAnimation(animationName, duration, timingFunction, iterationCount) {
+    animalImage.style.animationName = animationName;
+    animalImage.style.animationDuration = duration;
+    animalImage.style.animationTimingFunction = timingFunction;
+    animalImage.style.animationIterationCount = iterationCount;
 }
