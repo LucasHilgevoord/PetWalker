@@ -63,7 +63,7 @@ function createHeart() {
     heart.style.left = offsetX + "%"; // Set the left position with the calculated offsetX value
     heart.style.top = "12%"; // Center the heart vertically
     heart.style.transform = "translate(-50%, -50%)"; // Center the heart absolutely
-
+    
     document.getElementById("heart-container").appendChild(heart);
 
     // Remove the heart from the DOM after the animation is complete

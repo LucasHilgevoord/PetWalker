@@ -1,7 +1,13 @@
 const scenes = document.querySelectorAll('.scene');
 let currentSceneIndex = 1;
+let prevSceneIndex = 0;
+
+let walkbackInterval;
+let sceneTransition = 'transform 0.5s ease-in-out';
+let animalWalkBackTransition = 'transform 2.0s linear';
 
 function showScene(index) {
+    console.log("Show Scene: " + index);
 	for (var i = 0; i < scenes.length; i++) {
 		const scene = scenes[i];
         if (scene.classList.contains('ui-scene')) {
@@ -10,27 +16,38 @@ function showScene(index) {
             scene.style.transform = `translateX(${(i - index) * 100}%)`;
         }
     }
-    const translateValue = -(index * 100);
-    moveAnimalToPosition(translateValue);
-    console.log("Show Scene: " + index);
+    
+    prevSceneIndex = currentSceneIndex;
     currentSceneIndex = index;
+    moveAnimalToPosition();
 }
 
 // Function to move the animal to the specified position
-function moveAnimalToPosition(translateValue) {
-    // Calculate the new left position for the animal
-    const leftPosition = animalInitialLeft + translateValue; // Adjust as needed
-
+function moveAnimalToPosition() {
     // Apply the new left position to the animal
-    animalImage.style.left = leftPosition + 'px';
+    let direction = -(currentSceneIndex - prevSceneIndex);
+    console.log(direction);
+    let position = (200 * direction);
+    console.log(position);
 
-    // Play the walk animation
-    //animalImage.classList.add('walk-animation');
+    animalImage.style.transition = sceneTransition;
+    animalImage.style.transform = `translateX(${position}%)`;
+
+    // After a delay, move the animal back to the center
+    if (walkbackInterval != null) {
+        clearInterval(walkbackInterval);
+    }
+    walkbackInterval = setTimeout(() => {
+        animalImage.style.transition = animalWalkBackTransition;
+        
+        let randomX = getRandomNumber(-25, 25)
+        animalImage.style.transform = `translateX(${randomX}%)`;
+    }, 750);
 
     // After the animation duration, remove the walk animation class
     setTimeout(() => {
         //animalImage.classList.remove('walk-animation');
-    }, 1000); // Adjust the duration as needed
+    }, 1000);
 }
 
 // Swipe Right (Next Scene)
@@ -51,9 +68,7 @@ function swipeLeft() {
 }
 
 // Initial setup
-showScene(currentSceneIndex); // Show the initial scene
-
-// Event listeners for swipe gestures (you can use touch events or libraries for this)
+showScene(currentSceneIndex);
 document.addEventListener('swipeRight', swipeRight);
 document.addEventListener('swipeLeft', swipeLeft);
 
